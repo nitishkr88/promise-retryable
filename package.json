@@ -1,0 +1,67 @@
+{
+  "name": "promise-retryable",
+  "version": "0.1.0",
+  "description": "Retries a function which returns a promise, with configurable backoff and attempts",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "author": "Nitish",
+  "license": "MIT",
+  "homepage": "https://github.com/nitishkr88/promise-retryable#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nitishkr88/promise-retryable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nitishkr88/promise-retryable/issues"
+  },
+  "scripts": {
+    "build": "npm run build:lib && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "build:lib": "babel src --out-dir lib --ignore __tests__",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --ignore __tests__",
+    "build:umd": "cross-env webpack --mode development src/index.js -o dist/promise-retryable.js",
+    "build:umd:min": "cross-env webpack --mode production src/index.js -o dist/promise-retryable.min.js",
+    "clean": "rimraf dist lib es",
+    "format": "prettier-eslint \"+(src)/**/*.+(js)\" --ignore \"**/bundle.js\" --write",
+    "lint": "eslint src",
+    "precommit": "lint-staged",
+    "prepublishOnly": "npm run lint && npm run clean && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "cross-env": "^5.2.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  },
+  "keywords": [
+    "promise",
+    "retry",
+    "fetch",
+    "api",
+    "retryable"
+  ],
+  "files": [
+    "README.md",
+    "es",
+    "lib",
+    "dist"
+  ],
+  "lint-staged": {
+    "*.{js,json,md,css}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "npmName": "promise-retryable",
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ]
+}
