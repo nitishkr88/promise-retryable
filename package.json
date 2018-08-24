@@ -1,6 +1,6 @@
 {
   "name": "promise-retryable",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Retries a function which returns a promise, with configurable backoff and attempts",
   "main": "./lib/index.js",
   "module": "./es/index.js",
