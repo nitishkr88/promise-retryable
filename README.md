@@ -56,6 +56,7 @@ yarn add promise-retryable
   ```
 
 You can also inject a backoff function as the last argument with the following signature.
+The default implementation backs off in multiple of 2 with max time capped at maxWait provided.
 
 ```javascript
 function customBackoff(attemptNum, min, max) {
@@ -73,11 +74,22 @@ retry(minWait, maxWait, attempts, customBackoff)(fn).then(
 )
 ```
 
-The default implementation backs off in multiple of 2 with max time capped at maxWait provided.
+The resolved value would be the default value object resolved by the original promise in case the promise is successful in the first attempt.
 
-*Refer **example** folder for more details*
+```
+retry(fn).then(value)
+```
+
+In case of a re-attempt, if the promise resolves within the max attempts, the final resolved value would be an object containing the value and attempt in which it got resolved.
+
+```
+retry(fn).then({ value, attempt })
+```
+
+_Refer **example** folder for more details_
 
 ---
+
 ## License
 
 MIT. See `LICENSE`
