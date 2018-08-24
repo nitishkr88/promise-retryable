@@ -20,22 +20,27 @@ yarn add promise-retryable
 - With default settings
 
   ```javascript
-  import retry from promise-retyable
+  import axios from 'axios'
+  import retry from 'promise-retyable'
 
-  const fn = () => fetch('http://someurl')
-  retry(fn).then((value) => {
-    // fulfillment
-  }, (reason) => {
-    // rejection
-  })
+  const fn = () => axios('http://someurl')
+  retry(fn).then(
+    value => {
+      // fulfillment
+    },
+    reason => {
+      // rejection
+    }
+  )
   ```
 
 - With user defined settings
 
   ```javascript
-  import retry from promise-retyable
+  import axios from 'axios'
+  import retry from 'promise-retyable'
 
-  const fn = () => fetch('http://someurl')
+  const fn = () => axios('http://someurl')
 
   /**
    default values:
@@ -45,21 +50,24 @@ yarn add promise-retryable
   **/
 
   const minWait = 2000,
-        maxWait = 10000,
-        attempts = 5
+    maxWait = 10000,
+    attempts = 5
 
-  retry(minWait, maxWait, attempts)(fn).then((value) => {
-    // fulfillment
-  }, (reason) => {
-    // rejection
-  })
+  retry(minWait, maxWait, attempts)(fn).then(
+    value => {
+      // fulfillment
+    },
+    reason => {
+      // rejection
+    }
+  )
   ```
 
 You can also inject a backoff function as the last argument with the following signature.
 The default implementation backs off in multiple of 2 with max time capped at maxWait provided.
 
 ```javascript
-function customBackoff(attemptNum, min, max) {
+function customBackoff(attemptNum, minWait, maxWait) {
   // calculate sleepInterval based on the arguments
   return sleepInterval
 }
