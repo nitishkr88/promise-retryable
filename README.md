@@ -16,6 +16,10 @@ yarn add promise-retryable
 ```
 
 ## Usage
+The final resolved value would be an object containing the value and attempt in which it got resolved.
+```
+retry(fn).then({ value, attempt })
+```
 
 - With default settings
 
@@ -25,7 +29,7 @@ yarn add promise-retryable
 
   const fn = () => axios('http://someurl')
   retry(fn).then(
-    value => {
+    ({ value, attempt }) => {
       // fulfillment
     },
     reason => {
@@ -54,7 +58,7 @@ yarn add promise-retryable
     attempts = 5
 
   retry(minWait, maxWait, attempts)(fn).then(
-    value => {
+    ({ value, attempt }) => {
       // fulfillment
     },
     reason => {
@@ -73,7 +77,7 @@ function customBackoff(attemptNum, minWait, maxWait) {
 }
 
 retry(minWait, maxWait, attempts, customBackoff)(fn).then(
-  value => {
+  ({ value, attempt }) => {
     // fulfillment
   },
   reason => {
@@ -81,20 +85,6 @@ retry(minWait, maxWait, attempts, customBackoff)(fn).then(
   }
 )
 ```
-
-The resolved value would be the default value object resolved by the original promise in case the promise is successful in the first attempt.
-
-```
-retry(fn).then(value)
-```
-
-In case of a re-attempt, if the promise resolves within the max attempts, the final resolved value would be an object containing the value and attempt in which it got resolved.
-
-```
-retry(fn).then({ value, attempt })
-```
-
-_Refer **example** folder for more details_
 
 ---
 

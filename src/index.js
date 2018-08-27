@@ -10,6 +10,7 @@ const _defaultBackoff = (attemptNum, min, max) => {
   if (sleepInterval > max) {
     sleepInterval = max
   }
+  console.log('attemptNum', attemptNum, 'sleepInterval', sleepInterval)
   return sleepInterval
 }
 
@@ -39,7 +40,8 @@ const _retry = (
         value => {
           if (i === 0) return next()
           arr.splice(1)
-          return value
+          if (value.attempt) return value
+          return { value, attempt: i }
         },
         reason => _resolveWithDelay(next, backoff(i + 1, min, max), i + 1)
       ),
